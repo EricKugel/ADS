@@ -16,7 +16,6 @@ class Fraction:
     def __eq__(self, other_fraction):
         first_num = self.num * other_fraction.den
         second_num = other_fraction.num * self.den
-
         return first_num == second_num
 
     def __add__(self, other_fraction):
@@ -37,8 +36,8 @@ class Fraction:
         new_den = self.den * other_fraction.den
         for i in range(max(new_num, new_den), 1, -1):
             if all([num % i == 0 for num in [new_num, new_den]]):
-                new_num /= i
-                new_den /= i
+                new_num //= i
+                new_den //= i
         return Fraction(new_num, new_den)
 
     def __div__(self, other_fraction):
@@ -46,8 +45,8 @@ class Fraction:
         new_den = self.den * other_fraction.num
         for i in range(max(new_num, new_den), 1, -1):
             if all([num % i == 0 for num in [new_num, new_den]]):
-                new_num /= i
-                new_den /= i
+                new_num //= i
+                new_den //= i
         return Fraction(new_num, new_den)
 
     def __lt__(self, other_fraction):
@@ -65,3 +64,4 @@ y = Fraction(2, 3)
 print(y)
 print(x * y)
 print(x == y)
+# poggers
