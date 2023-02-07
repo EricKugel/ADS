@@ -12,3 +12,6 @@
  - Signed up for book club
  - Finished Unit 1
  - Almost finished 1.16.19, a sudoku solver
+
+### Tuesday 2/7
+ - Almost finished C's Problem 2
