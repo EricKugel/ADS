@@ -15,3 +15,7 @@
 
 ### Tuesday 2/7
  - Almost finished C's Problem 2
+
+### Wednesday 2/8
+ - Made good progress on 1.16.9
+ - Started and completed unit 2 of the textbook (mostly review for me)

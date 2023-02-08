@@ -17,7 +17,7 @@ output = [list(row) for row in input]
 
 coord = (0, 0)
 next_coord = lambda coord : (coord[0], coord[1] + 1) if coord[1] + 1 != 9 else (coord[0] + 1, 0)
-last_coord = lambda coord : (coord[0], coord[1] - 1) if coord[1] - 1 != -1 else (coord[0] - 1, 0)
+last_coord = lambda coord : (coord[0], coord[1] - 1) if coord[1] - 1 != -1 else (coord[0] - 1, 8)
 
 def get_blocks():
     global output
@@ -42,17 +42,40 @@ def all_chill():
             return False
     return True
 
+# while True:
+#     if input[coord[0]][coord[1]] == 0 and not all_chill():
+#         if output[coord[0]][coord[1]] == 9:
+#             output[coord[0]][coord[1]] = 0
+#             coord = last_coord(coord)
+#         output[coord[0]][coord[1]] += 1
+#     elif input[coord[0]][coord[1]] == 0:
+#         output[coord[0]][coord[1]] += 1
+#     if all_chill():
+#         coord = next_coord(coord)
+#         if coord[0] == 9:
+#             break
+
 while True:
-    if input[coord[0]][coord[1]] == 0 and not all_chill():
-        if output[coord[0]][coord[1]] == 9:
-            output[coord[0]][coord[1]] = 0
-            coord = last_coord(coord)
+    print(coord)
+    if coord[0] > 8:
+        break
+    while output[coord[0]][coord[1]] > 9:
+        output[coord[0]][coord[1]] = 0
+        coord = last_coord(coord)
+        while input[coord[0]][coord[1]] != 0:
+           coord = last_coord(coord)
         output[coord[0]][coord[1]] += 1
-    elif input[coord[0]][coord[1]] == 0:
-        output[coord[0]][coord[1]] += 1
-    if all_chill():
+    
+    if input[coord[0]][coord[1]] == 0:
+        if output[coord[0]][coord[1]] == 0:
+            output[coord[0]][coord[1]] = 1
+        while not all_chill():
+            output[coord[0]][coord[1]] += 1
+            if output[coord[0]][coord[1]] > 9:
+                break
+        if output[coord[0]][coord[1]] <= 9:
+            coord = next_coord(coord)
+    else:
         coord = next_coord(coord)
-        if coord[0] == 9:
-            break
 
 [print(line) for line in output]
