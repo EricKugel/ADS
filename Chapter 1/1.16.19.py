@@ -1,4 +1,4 @@
-# Most of the 1.16 exercises would be a waste of time.
+# Most of the 1.16 exercises would be a waste of time
 # I'll do exercise 19, making a sudoku solver.
 
 input = (
@@ -25,7 +25,7 @@ def get_blocks():
     for row in range(3):
         for col in range(3):
             block = []
-            [[block.append(output[row + r][col + c]) for r in range(3)] for c in range(3)]
+            [[block.append(output[row * 3 + r][col * 3 + c]) for r in range(3)] for c in range(3)]
             blocks.append(block)
     return blocks
 
@@ -42,21 +42,7 @@ def all_chill():
             return False
     return True
 
-# while True:
-#     if input[coord[0]][coord[1]] == 0 and not all_chill():
-#         if output[coord[0]][coord[1]] == 9:
-#             output[coord[0]][coord[1]] = 0
-#             coord = last_coord(coord)
-#         output[coord[0]][coord[1]] += 1
-#     elif input[coord[0]][coord[1]] == 0:
-#         output[coord[0]][coord[1]] += 1
-#     if all_chill():
-#         coord = next_coord(coord)
-#         if coord[0] == 9:
-#             break
-
 while True:
-    print(coord)
     if coord[0] > 8:
         break
     while output[coord[0]][coord[1]] > 9:
