@@ -19,3 +19,14 @@
 ### Wednesday 2/8
  - Made good progress on 1.16.9
  - Started and completed unit 2 of the textbook (mostly review for me)
+
+### Thursday 2/9
+ - Completed 1.16.9
+ - Completed C's Problem 2
+ - Started an interpreter
+
+### Friday 2/10
+ - Sick
+
+## Week review
+ - Completed all my goals. I think I underestimated the time I would have.
