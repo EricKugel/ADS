@@ -21,6 +21,12 @@
  - Started and completed unit 2 of the textbook (mostly review for me)
 
 ### Thursday 2/9
- - Completed 1.16.9, a sudoku solver
- - Completed C's 2nd problem, a password guesser
+ - Completed 1.16.9
+ - Completed C's Problem 2
  - Started an interpreter
+
+### Friday 2/10
+ - Sick
+
+## Week review
+ - Completed all my goals. I think I underestimated the time I would have.
