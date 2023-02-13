@@ -15,6 +15,17 @@ digits_to_letters = {
     9: "wxyz"
 }
 
+letters_to_digits = {
+    "a": 2, "b": 2, "c": 2,
+    "d": 3, "e": 3, "f": 3,
+    "g": 4, "h": 4, "i": 4,
+    "j": 5, "k": 5, "l": 5,
+    "m": 6, "n": 6, "o": 6,
+    "p": 7, "q": 7, "r": 7, "s": 7,
+    "t": 8, "u": 8, "v": 8,
+    "w": 9, "x": 9, "y": 9, "z": 9
+}
+
 words = set()
 with open("Chapter 1/C's Problem 2/words.txt", "r") as file:
     words = set([word.lower().strip() for word in file.readlines()])
@@ -35,7 +46,7 @@ add_to_all([])
 
 possible_solutions = set()
 for j, perm in enumerate(all_permutations_of_lengths):
-    solutions = set()
+    solutions = set([""])
     for i, length in enumerate(perm):
         if i == 0:
             words = set(filter(lambda word : word.startswith("i"), words_by_length[length]))
@@ -45,10 +56,8 @@ for j, perm in enumerate(all_permutations_of_lengths):
         for solution in solutions:
             for word in words:
                 new_solutions |= {solution + word}
-            # [new_solutions |= {solution + word} for word in words]
         solutions = new_solutions
     possible_solutions |= set(filter(lambda solution : solution[1] in digits_to_letters[8], solutions))
-    print(j)
 
-with open("output.txt", "w") as file:
-    file.write("\n".join(list(possible_solutions)))
+with open("Chapter 1/C's Problem 2/output.txt", "w") as file:
+    file.write("\n".join(["".join([str(letters_to_digits[letter]) for letter in word]) for word in possible_solutions]))

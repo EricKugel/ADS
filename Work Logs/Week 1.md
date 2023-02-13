@@ -19,3 +19,8 @@
 ### Wednesday 2/8
  - Made good progress on 1.16.9
  - Started and completed unit 2 of the textbook (mostly review for me)
+
+### Thursday 2/9
+ - Completed 1.16.9, a sudoku solver
+ - Completed C's 2nd problem, a password guesser
+ - Started an interpreter
