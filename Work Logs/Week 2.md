@@ -5,3 +5,16 @@
  
 ### Monday 2/13
  - Started considering algorithms to present about
+
+### Tuesday 2/14
+ - Settled on an algorithm (quicksort)
+ - Began researching the algorithm
+ - Implemented the algorithm (easy)
+ - Made progress on the interpreter
+
+### Wednesday 2/15
+ - absent, had an orchestra rehearsal
+
+### Thursday 2/16
+ - Got the first semblances of a programming language
+ - Named the langage (esarciaffeplang)

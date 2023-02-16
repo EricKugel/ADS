@@ -40,6 +40,15 @@ def my_print(x):
     print(x)
     return None
 
+def my_input():
+    return input()
+
+def my_eval(x):
+    from main import evaluate, parse
+    return evaluate(parse(x))
+
+
+
 functions = {
     "sin": my_sin, 
     "cos": my_cos, 
@@ -53,5 +62,9 @@ functions = {
     "log": my_log, 
     "log_base": my_log_base,
     "floor": my_floor,
-    "print": my_print
+    "print": my_print,
+    "input": my_input,
+    "eval": my_eval
 }
+
+operators = lambda op : eval("lambda a, b : a " + op.replace("^", "**") + " b")
