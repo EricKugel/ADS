@@ -3,12 +3,7 @@ super
 awesome
 really 
 cool
-impressive
-and
-fully
-functional
-epic
 programming
 language
 
-esarciaffeplang
+esarcplang

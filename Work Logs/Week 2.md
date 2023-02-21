@@ -17,4 +17,11 @@
 
 ### Thursday 2/16
  - Got the first semblances of a programming language
- - Named the langage (esarciaffeplang)
+ - Named the langage (esarcplang)
+
+### Friday 2/17
+ - Gone for MMEA
+
+## Week review
+ - I didn't get quite as far as I wanted because I was gone more than expected.
+ - I'm surprised by how far I got on the interpreter
