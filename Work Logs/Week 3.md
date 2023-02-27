@@ -8,4 +8,16 @@
  - No school (Presidents' Day)
 
 ### Tuesday 2/21
- - 
+ - Got caught up on 2 of C's challenges
+
+### Wednesday 2/22
+ - Snow Day
+
+### Thursday 2/23
+ - Snow Day
+
+### Friday 2/24
+ - Gone
+
+## Week Summary
+ - There wasn't much week to summarize

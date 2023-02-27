@@ -49,16 +49,21 @@ possible_solutions = set()
 for j, perm in enumerate(all_permutations_of_lengths):
     solutions = set([""])
     for i, length in enumerate(perm):
-        if i == 0:
-            words = set(filter(lambda word : word.startswith("i"), words_by_length[length]))
-        else:
-            words = words_by_length[length]
+        words = words_by_length[length]
         new_solutions = set()
         for solution in solutions:
             for word in words:
                 new_solutions |= {solution + word}
         solutions = new_solutions
-    possible_solutions |= set(filter(lambda solution : solution[1] in digits_to_letters[8], solutions))
+    possible_solutions |= solutions
+
+possible_solutions = set(filter(lambda solution : solution[6] in digits_to_letters[9], possible_solutions))
+possible_solutions = set(filter(lambda solution : solution[5] in digits_to_letters[8], possible_solutions))
+possible_solutions = set(filter(lambda solution : solution[0] in digits_to_letters[6], possible_solutions))
+possible_solutions = set(filter(lambda solution : solution[3] in digits_to_letters[6], possible_solutions))
+
+possible_solutions = set(["".join([str(letters_to_digits[letter]) for letter in word]) for word in possible_solutions])
+possible_solutions = set(filter(lambda solution : all([solution.count(letter) == 1 or i in [0, 3] for i, letter in enumerate(solution)]), possible_solutions))
 
 with open("Chapter 1/Phone Password Cracker/output.txt", "w") as file:
-    file.write("\n".join(["".join([str(letters_to_digits[letter]) for letter in word]) for word in possible_solutions]))
+    file.write("\n".join(possible_solutions))
