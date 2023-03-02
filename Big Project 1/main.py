@@ -1,16 +1,27 @@
 # Interpreter for a language
-from functions import functions, operators
+from functions import functions, operators, Object
 
 VALID_NUMBERS = "1234567890."
-VALID_OPS = "^*/+-%"
-ORDER_OF_OPS = ["^", "*/%", "+-"]
+VALID_OPS = "^*/+-%&|"
+ORDER_OF_OPS = ["^", "*/%", "+-", "&", "|"]
+
+variables = {"true": True, "false": False}
 
 def get_chunk_at(i, text):
+    open = text[i]
+    close = {
+        '(': ')',
+        '[': ']',
+        '"': '"'
+    }[open]
+    
     j = i + 1
     counter = 1
     while counter != 0 and j < len(text):
-        if text[j] == "(":
+        if text[j] == open:
             counter += 1
+            if open == '"' and not text[j - 1] == "\\":
+                return eval(text[i:j+1])
         elif text[j] == ")":
             counter -= 1
         j += 1
@@ -49,43 +60,45 @@ def get_variable(i, text):
 def parse(text):
     text = clean(text)
     parsed = []
-    is_op = False
+    # is_op = False
     i = 0
     while i < len(text):
         character = text[i]
-        if character == "(":
+        if character in '(["':
             chunk = get_chunk_at(i, text)
             i += len(chunk)
-            parsed.append(parse(chunk[1:-1]))
-            is_op = True
-        else:
-            if not is_op:
-                if is_function(i, text):
-                    # reduce function to a constant
-                    func = get_function(i, text)
-                    func_input = get_chunk_at(text.index("(", i + 1), text)
-                    i += len(func_input) + len(func)
-                    func_input = evaluate(parse(func_input[1:-1]))
-                    parsed.append(functions[func](func_input))
-                elif is_variable(i, text):
-                    var = get_variable(i, text)
-                    i += len(var)
-                    parsed.append(variables[var])
-                else:
-                    token = ""
-                    while (character in VALID_NUMBERS or (character == "-" and len(token) == 0)) and i < len(text):
-                        token += character
-                        i += 1
-                        try:
-                            character = text[i]
-                        except Exception:
-                            character = ""
-                    parsed.append(float(token))
-                is_op = True
+            if character != '"':
+                parsed.append(chunk[0])
+                parsed.append(parse(chunk[1:-1]))
+                parsed.append(chunk[-1])
             else:
-                parsed.append(character)
-                i += 1
-                is_op = False
+                parsed.append(parse(chunk[1:-1]))
+            # is_op = True
+        else:
+            if is_function(i, text):
+                # reduce function to a constant
+                func = get_function(i, text)
+                func_input = get_chunk_at(text.index("(", i + 1), text)
+                i += len(func_input) + len(func)
+                func_input = evaluate(parse(func_input[1:-1]))
+                parsed.append(functions[func](func_input))
+            elif is_variable(i, text):
+                var = get_variable(i, text)
+                i += len(var)
+                parsed.append(variables[var])
+            else:
+                token = ""
+                while character in VALID_NUMBERS and i < len(text):
+                    token += character
+                    i += 1
+                    try:
+                        character = text[i]
+                    except Exception:
+                        character = ""
+                if character in VALID_OPS:
+                    parsed.append(character)
+                parsed.append(float(token))
+            # is_op = True
     return parsed
 
 def evaluate(parsed):
@@ -104,8 +117,6 @@ def evaluate(parsed):
                 i -= 2
             i += 2
     return parsed[0]
-
-variables = {}
 
 data = []
 with open("Big Project 1/input.esar", "r") as file:

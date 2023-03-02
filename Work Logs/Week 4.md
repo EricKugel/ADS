@@ -21,3 +21,6 @@
  - Annotated quicksort.py
  - Signed up for GitHub student developer pack
  - Listened to other Algorithm in the News presentations
+
+### Thursday 3/2
+ - Made a lot of progress on the interpreter (almost strings!!)

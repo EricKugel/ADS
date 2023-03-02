@@ -47,7 +47,8 @@ def my_eval(x):
     from main import evaluate, parse
     return evaluate(parse(x))
 
-
+def my_num(x):
+    return float(x)
 
 functions = {
     "sin": my_sin, 
@@ -64,7 +65,14 @@ functions = {
     "floor": my_floor,
     "print": my_print,
     "input": my_input,
-    "eval": my_eval
+    "eval": my_eval,
+    "num": my_num
 }
 
-operators = lambda op : eval("lambda a, b : a " + op.replace("^", "**") + " b")
+operators = lambda op : eval("lambda a, b : a " + op.replace("^", "**").replace("&", " and ").replace("|", " or ") + " b")
+
+class Object():
+    def __init__(self, name, value, type):
+        self.name = name
+        self.value = value
+        self.type = type
