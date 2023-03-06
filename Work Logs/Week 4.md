@@ -24,3 +24,10 @@
 
 ### Thursday 3/2
  - Made a lot of progress on the interpreter (almost strings!!)
+
+### Friday 3/3
+ - No school
+
+## Week Summary
+ - This week was really productive
+ - I kind of surprised myself with the quality of my presentations
