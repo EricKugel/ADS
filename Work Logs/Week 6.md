@@ -8,3 +8,5 @@
 ### Tuesday 3/14
  - happy pi day!
  
+### Wednesday 3/15
+ - TOKENIZERRRRR
