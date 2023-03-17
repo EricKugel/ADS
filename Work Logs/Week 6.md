@@ -9,4 +9,9 @@
  - happy pi day!
  
 ### Wednesday 3/15
+ - Started unit 9
  - TOKENIZERRRRR
+
+### Thursday 3/16
+ - Worked on the project proposal
+
