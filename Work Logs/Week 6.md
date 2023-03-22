@@ -15,3 +15,8 @@
 ### Thursday 3/16
  - Worked on the project proposal
 
+#### Friday 3/17
+ - Worked on unaray operators in the tokenizer
+
+## Week Summary
+ - I met my goals, and the timeline for the project is looking good.

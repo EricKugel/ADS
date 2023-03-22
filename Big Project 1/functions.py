@@ -43,9 +43,8 @@ def my_print(x):
 def my_input():
     return input()
 
-def my_eval(x):
-    from main import evaluate, parse
-    return evaluate(parse(x))
+def my_prompt(x):
+    return input(x)
 
 def my_num(x):
     return float(x)
@@ -65,11 +64,9 @@ functions = {
     "floor": my_floor,
     "print": my_print,
     "input": my_input,
-    "eval": my_eval,
+    "prompt": my_prompt,
     "num": my_num
 }
-
-operators = lambda op : eval("lambda a, b : a " + op.replace("^", "**").replace("&", " and ").replace("|", " or ") + " b")
 
 class Object():
     def __init__(self, name, value, type):
