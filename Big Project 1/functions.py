@@ -49,6 +49,37 @@ def my_prompt(x):
 def my_num(x):
     return float(x)
 
+def my_if(a, b, c):
+    if a:
+        return b
+    return c
+
+def list():
+    return []
+
+def append(a, b):
+    a.append(b)
+    return a
+
+def insert(a, i, b):
+    a.insert(i, b)
+    return a
+
+def remove(a, i):
+    a.pop(i)
+
+def size(a):
+    return len(a)
+
+def get(a, i):
+    return a[i]
+
+def slice(a, i, j):
+    return a[i:j]
+
+def goto(a):
+    return "*" + a
+
 functions = {
     "sin": my_sin, 
     "cos": my_cos, 
@@ -67,6 +98,14 @@ functions = {
     "prompt": my_prompt,
     "num": my_num
 }
+
+operator_functions = {
+    "&": lambda a, b : a and b,
+    "|": lambda a, b : a or b,
+}
+
+for operator in ["+", "-", "*", "**", "/", "//", "%", "<", ">", "<=", ">=", "==", "!="]:
+    operator_functions[operator] = eval("lambda a, b : a " + operator + " b")
 
 class Object():
     def __init__(self, name, value, type):

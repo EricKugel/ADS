@@ -1,12 +1,21 @@
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 alphaBET = alphabet + alphabet.upper()
 variables = alphaBET + "_"
-operators = ["+", "-", "*", "/", "//", "+=", "-=", "*=", "^" "/=", "//=", "%=", "%", "&", "!", "|", "<", "<=", ">", ">=", "==", "!="]
-precedence = {"^": 10,"~": 9.5,"!": 9.5,"*": 9,"/": 9,"//": 9,"%": 9,"+": 8,"-": 8,"<": 7,"<=": 7,">": 7,">=": 7,"==": 7,"!=": 7,"&": 6,"|": 5,"+=": 4,"-=": 4,"*=": 4,"/=": 4,"//=": 4,"%=": 4}
+operators = ["+", "-", "*", "**", "/", "//", "%", "&", "!", "|", "<", "<=", ">", ">=", "==", "!="]
+precedence = {"**": 10,"~": 9.5,"!": 9.5,"*": 9,"/": 9,"//": 9,"%": 9,"+": 8,"-": 8,"<": 7,"<=": 7,">": 7,">=": 7,"==": 7,"!=": 7,"&": 6,"|": 5}
 numbers = "0.123456789"
 
+objects = {
+    "true": True,
+    "false": False,
+    "True": True,
+    "False": False,
+    "null": None
+}
+
 import time
-import functions
+from functions import functions, operator_functions
+from inspect import signature
 
 def is_operator(data, i):
     return any([i + len(op) < len(data) and data[i:i+len(op)] == op for op in operators])
@@ -69,6 +78,8 @@ def tokenize(data):
                 i += 1
         else:
             i += 1
+    if len(token) > 0:
+        tokens.append(token)
     return tokens
 
 def postfix(tokens):
@@ -85,7 +96,7 @@ def postfix(tokens):
         elif all([letter in variables for letter in token]):
             stack.append(token)
         elif token in operators:
-            while stack[-1] in operators and precedence[stack[-1]] >= precedence[token]:
+            while stack and stack[-1] in operators and precedence[stack[-1]] >= precedence[token]:
                 output.append(stack.pop())
             stack.append(token)
         elif token == "(":
@@ -103,7 +114,63 @@ def postfix(tokens):
 def evaluate(tokens):
     stack = []
     for token in tokens:
-        if 
+        if token[0] == '"' or all([letter in numbers for letter in token]) or all([letter in variables for letter in token]) and not token in functions:
+            if all([letter in numbers for letter in token]):
+                token = float(token)
+            stack.append(token)
+        elif token in operators:
+            if token == "!":
+                stack[-1] = not stack[-1]
+            elif token == "~":
+                stack[-1] = -1 * stack[-1]
+            else:
+                b, a = stack.pop(), stack.pop()
+                if str(b)[0] == '"':
+                    b = b[1:-1]
+                elif all([letter in variables for letter in str(b)]):
+                    b = objects[str(b)]
+                if str(a)[0] == '"':
+                    a = a[1:-1]
+                elif all([letter in variables for letter in str(a)]):
+                    a = objects[str(a)]
+                stack.append(operator_functions[token](a, b))
+        else:
+            params = len(signature(functions[token]).parameters)
+            args = [stack.pop() for i in range(params)][::-1]
+            for i in range(params):
+                arg = args[i]
+                if str(arg)[0] == '"':
+                    args[i] = arg[1:-1]
+                elif all([letter in variables for letter in str(arg)]):
+                    args[i] = objects[str(arg)]
+            stack.append(functions[token](*args))
+    return stack[-1]
 
+data = []
+with open("Big Project 1/input.esar", "r") as file:
+    data = file.readlines()
 
-print(postfix(tokenize("sin ( max ( 2, 3 ) / 3 * pi )")))
+labelled_lines = {}
+lines = []
+for i, line in enumerate(data):
+    line = tokenize(line)
+    if ":" in line:
+        labelled_lines[line[0]] = i
+        line = line[2:]
+    if "=" in line:
+        lines.append((line[0], postfix(line[2:])))
+    else:
+        lines.append(postfix(line))
+
+line_number = 0
+while line_number < len(lines):
+    if isinstance(lines[line_number], tuple):
+        objects[lines[line_number][0]] = evaluate(lines[line_number][1])
+    else:
+        value = evaluate(lines[line_number])
+        if str(value)[0] == "*":
+            line_number = labelled_lines[value[1:]]
+            continue
+    line_number += 1
+
+print(evaluate(postfix(tokenize('1 + 1 < 3 & 22 == 22'))))
