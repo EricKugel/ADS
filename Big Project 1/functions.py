@@ -54,31 +54,34 @@ def my_if(a, b, c):
         return b
     return c
 
-def list():
+def my_list():
     return []
 
-def append(a, b):
+def my_append(a, b):
     a.append(b)
     return a
 
-def insert(a, i, b):
+def my_insert(a, i, b):
     a.insert(i, b)
     return a
 
-def remove(a, i):
+def my_remove(a, i):
     a.pop(i)
 
-def size(a):
+def my_size(a):
     return len(a)
 
-def get(a, i):
+def my_get(a, i):
     return a[i]
 
-def slice(a, i, j):
+def my_slice(a, i, j):
     return a[i:j]
 
-def goto(a):
+def my_goto(a):
     return "*" + a
+
+def my_pass():
+    pass
 
 functions = {
     "sin": my_sin, 
@@ -96,7 +99,17 @@ functions = {
     "print": my_print,
     "input": my_input,
     "prompt": my_prompt,
-    "num": my_num
+    "num": my_num,
+    "list": my_list,
+    "insert": my_insert,
+    "remove": my_remove,
+    "size": my_size,
+    "get": my_get,
+    "slice": my_slice,
+    "append": my_append,
+    "goto": my_goto,
+    "if": my_if,
+    "pass": my_pass
 }
 
 operator_functions = {

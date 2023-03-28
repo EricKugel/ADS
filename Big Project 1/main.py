@@ -1,7 +1,7 @@
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 alphaBET = alphabet + alphabet.upper()
 variables = alphaBET + "_"
-operators = ["+", "-", "*", "**", "/", "//", "%", "&", "!", "|", "<", "<=", ">", ">=", "==", "!="]
+operators = ["+", "-", "*", "**", "/", "//", "%", "&", "!", "|", "<", "<=", ">", ">=", "==", "!=", "="]
 precedence = {"**": 10,"~": 9.5,"!": 9.5,"*": 9,"/": 9,"//": 9,"%": 9,"+": 8,"-": 8,"<": 7,"<=": 7,">": 7,">=": 7,"==": 7,"!=": 7,"&": 6,"|": 5}
 numbers = "0.123456789"
 
@@ -10,7 +10,8 @@ objects = {
     "false": False,
     "True": True,
     "False": False,
-    "null": None
+    "null": None,
+    "None": None
 }
 
 import time
@@ -30,10 +31,22 @@ def tokenize(data):
     while i < len(data):
         char = data[i]
         if char in "(),:":
+
             if len(token) > 0:
                 tokens.append(token)
             token = ""
             tokens.append(char)
+            if char == ",":
+                tokens.insert(-1, ")")
+                j = len(tokens) - 3
+                k = 0
+                while not (tokens[j] in [",", "("] and k == 0):
+                    if tokens[j] == "(":
+                        k += 1
+                    elif tokens[j] == ")":
+                        k -= 1
+                    j -= 1
+                tokens.insert(j + 1, "(")
             i += 1
         elif char in " \t":
             if len(token) > 0:
@@ -91,7 +104,7 @@ def postfix(tokens):
             output.append(token)
         elif token[0] == '"':
             output.append(token)
-        elif all([letter in variables for letter in token]) and not tokens[0] == "(":
+        elif all([letter in variables for letter in token]) and tokens and not tokens[0] == "(":
             output.append(token)
         elif all([letter in variables for letter in token]):
             stack.append(token)
@@ -144,7 +157,10 @@ def evaluate(tokens):
                 elif all([letter in variables for letter in str(arg)]):
                     args[i] = objects[str(arg)]
             stack.append(functions[token](*args))
-    return stack[-1]
+    result = stack[-1]
+    if all([letter in variables for letter in str(result)]):
+        result = objects[str(result)]
+    return result
 
 data = []
 with open("Big Project 1/input.esar", "r") as file:
@@ -172,5 +188,3 @@ while line_number < len(lines):
             line_number = labelled_lines[value[1:]]
             continue
     line_number += 1
-
-print(evaluate(postfix(tokenize('1 + 1 < 3 & 22 == 22'))))
