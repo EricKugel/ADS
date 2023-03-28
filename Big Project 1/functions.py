@@ -41,13 +41,16 @@ def my_print(x):
     return None
 
 def my_input():
-    return input()
+    return '"' + input() + '"'
 
 def my_prompt(x):
-    return input(x)
+    return '"' + input(x) + '"'
 
 def my_num(x):
     return float(x)
+
+def my_str(x):
+    return str(x)
 
 def my_if(a, b, c):
     if a:
@@ -62,26 +65,34 @@ def my_append(a, b):
     return a
 
 def my_insert(a, i, b):
-    a.insert(i, b)
+    a.insert(int(i), b)
     return a
 
 def my_remove(a, i):
-    a.pop(i)
+    a.pop(int(i))
 
 def my_size(a):
     return len(a)
 
 def my_get(a, i):
-    return a[i]
+    return a[int(i)]
 
 def my_slice(a, i, j):
-    return a[i:j]
+    return a[int(i):int(j)]
 
 def my_goto(a):
     return "*" + a
 
 def my_pass():
     pass
+
+def my_read(x):
+    with open(x) as file:
+        return '"' + file.read() + '"'
+    
+def my_readlines(x):
+    with open(x) as file:
+        return ['"' + line.strip() + '"' for line in file.readlines()]
 
 functions = {
     "sin": my_sin, 
@@ -109,7 +120,10 @@ functions = {
     "append": my_append,
     "goto": my_goto,
     "if": my_if,
-    "pass": my_pass
+    "pass": my_pass,
+    "str": my_str,
+    "read": my_read,
+    "readlines": my_readlines
 }
 
 operator_functions = {

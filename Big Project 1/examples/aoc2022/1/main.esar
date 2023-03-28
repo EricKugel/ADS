@@ -1,0 +1,16 @@
+# Part 1
+lines = readlines("Big Project 1/examples/aoc2022/1/input.txt")
+
+elves = list()
+
+
+
+food = 0
+here: i = 0
+elf = 0
+food = get(lines, i)
+i = i + 1
+elf = elf + if(food != "", num(food), 0)
+return_append_elves: if(food == "", goto("append_elves"), goto("here"))
+
+append_elves: 

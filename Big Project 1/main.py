@@ -17,6 +17,7 @@ objects = {
 import time
 from functions import functions, operator_functions
 from inspect import signature
+import sys
 
 def is_operator(data, i):
     return any([i + len(op) < len(data) and data[i:i+len(op)] == op for op in operators])
@@ -31,7 +32,6 @@ def tokenize(data):
     while i < len(data):
         char = data[i]
         if char in "(),:":
-
             if len(token) > 0:
                 tokens.append(token)
             token = ""
@@ -138,37 +138,47 @@ def evaluate(tokens):
                 stack[-1] = -1 * stack[-1]
             else:
                 b, a = stack.pop(), stack.pop()
-                if str(b)[0] == '"':
+                if len(str(b)) > 0 and str(b)[0] == '"':
                     b = b[1:-1]
-                elif all([letter in variables for letter in str(b)]):
+                elif len(str(b)) > 0 and all([letter in variables for letter in str(b)]):
                     b = objects[str(b)]
-                if str(a)[0] == '"':
+                    if len(str(b)) > 0 and str(b)[0] == '"':
+                        b = b[1:-1]
+                if len(str(a)) > 0 and str(a)[0] == '"':
                     a = a[1:-1]
-                elif all([letter in variables for letter in str(a)]):
+                elif len(str(a)) > 0 and all([letter in variables for letter in str(a)]):
                     a = objects[str(a)]
+                    if len(str(a)) > 0 and str(a)[0] == '"':
+                        a = a[1:-1]
                 stack.append(operator_functions[token](a, b))
         else:
             params = len(signature(functions[token]).parameters)
             args = [stack.pop() for i in range(params)][::-1]
             for i in range(params):
                 arg = args[i]
-                if str(arg)[0] == '"':
+                if len(str(arg)) > 0 and str(arg)[0] == '"':
                     args[i] = arg[1:-1]
-                elif all([letter in variables for letter in str(arg)]):
+                elif len(str(args[i])) > 0 and all([letter in variables for letter in str(arg)]):
                     args[i] = objects[str(arg)]
+                    if len(str(args[i])) > 0 and str(args[i])[0] == '"':
+                        args[i] = args[i][1:-1]
             stack.append(functions[token](*args))
     result = stack[-1]
-    if all([letter in variables for letter in str(result)]):
+    if len(str(result)) > 0 and all([letter in variables for letter in str(result)]):
         result = objects[str(result)]
     return result
 
+# file_name = sys.argv[1]
+file_name = "examples/aoc2022/1/main.esar"
 data = []
-with open("Big Project 1/input.esar", "r") as file:
+with open("Big Project 1/" + file_name, "r") as file:
     data = file.readlines()
 
 labelled_lines = {}
 lines = []
 for i, line in enumerate(data):
+    if line.strip().startswith("#"):
+        continue
     line = tokenize(line)
     if ":" in line:
         labelled_lines[line[0]] = i
