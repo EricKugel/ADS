@@ -163,7 +163,7 @@ def evaluate(tokens):
                     if len(str(args[i])) > 0 and str(args[i])[0] == '"':
                         args[i] = args[i][1:-1]
             stack.append(functions[token](*args))
-    result = stack[-1]
+    result = stack[-1] if stack else None
     if len(str(result)) > 0 and all([letter in variables for letter in str(result)]):
         result = objects[str(result)]
     return result

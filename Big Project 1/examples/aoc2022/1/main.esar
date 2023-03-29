@@ -1,16 +1,15 @@
 # Part 1
 lines = readlines("Big Project 1/examples/aoc2022/1/input.txt")
+i = 0
 
 elves = list()
-
-
-
-food = 0
-here: i = 0
+start_while: elf = 0
+if(get(lines, i) == "", pass(), goto("end_if"))
+append(elves, elf)
+print(elf)
 elf = 0
-food = get(lines, i)
+end_if: elf = elf + if(get(lines, i) == "", 0, num(get(lines, i)))
 i = i + 1
-elf = elf + if(food != "", num(food), 0)
-return_append_elves: if(food == "", goto("append_elves"), goto("here"))
+if(i < len(lines) - 1, goto("start_while"), pass())
 
-append_elves: 
+print(max(elves))

@@ -47,7 +47,10 @@ def my_prompt(x):
     return '"' + input(x) + '"'
 
 def my_num(x):
-    return float(x)
+    try:
+        return float(x)
+    except:
+        return 0
 
 def my_str(x):
     return str(x)
@@ -59,6 +62,9 @@ def my_if(a, b, c):
 
 def my_list():
     return []
+
+def my_len(x):
+    return len(x)
 
 def my_append(a, b):
     a.append(b)
@@ -93,6 +99,9 @@ def my_read(x):
 def my_readlines(x):
     with open(x) as file:
         return ['"' + line.strip() + '"' for line in file.readlines()]
+    
+def my_max(x):
+    return max(x)
 
 functions = {
     "sin": my_sin, 
@@ -123,7 +132,9 @@ functions = {
     "pass": my_pass,
     "str": my_str,
     "read": my_read,
-    "readlines": my_readlines
+    "readlines": my_readlines,
+    "max": my_max,
+    "len": my_len,
 }
 
 operator_functions = {
